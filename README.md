@@ -52,6 +52,8 @@ npx wrangler secret put JWT_SECRET
 
 ## API
 
+面向第三方客户端的完整接口文档见 [`docs/API.md`](docs/API.md)（含错误码、上传/下载细节、TS 与 Python 示例）。下面是速查表。
+
 除登录与下载外，全部需要 `Authorization: Bearer <token>`。错误统一为 `{ "error": { "code": "...", "message": "..." } }`。
 
 | 方法 | 路径 | 请求体 | 说明 |
