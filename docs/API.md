@@ -440,7 +440,7 @@ Cache-Control: private, max-age=0, must-revalidate
 
 - 带 `Range: bytes=0-1023` 时返回 `206 Partial Content`，并带 `Content-Range: bytes 0-1023/<total>`。
 - 只支持单段 Range（`bytes=start-end` / `bytes=start-` / `bytes=-suffix`），不支持多段。
-- 不带 `Range` 时返回 `200` 和完整内容。
+- 不带 `Range` 时返回 `200` 和完整内容，且**不带** `Content-Range`。
 - 越界或格式错误的 Range 可能返回非 2xx（含 4xx/5xx），客户端把它当作下载失败处理即可，不要假设一定是 `416`。
 
 失败：`404`（纯文本 `文件不存在`）。

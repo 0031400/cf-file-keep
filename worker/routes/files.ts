@@ -209,7 +209,10 @@ export async function downloadFile(request: Request, env: Env, url: URL, fileId:
 	headers.set('Cache-Control', 'private, max-age=0, must-revalidate');
 	headers.set('Content-Disposition', contentDisposition(row.name, url.searchParams.get('inline') === '1'));
 
-	const range = object.range;
+	// 200 / 206 必须按「请求有没有带 Range」来判断。
+	// 不能用 object.range 判断：这版运行时即使没请求 Range，R2 返回的 R2ObjectBody
+	// 也会把 range 填成整个对象（offset 0、length = size），拿它当开关会让所有下载都变成 206。
+	const range = hasRange ? object.range : undefined;
 	if (!range) return new Response(object.body, { status: 200, headers });
 
 	let start = 0;
